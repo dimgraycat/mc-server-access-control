@@ -44,7 +44,13 @@ if ([string]::IsNullOrWhiteSpace($raw)) {
 
 function Save-Ops {
     param([array]$Data)
-    ($Data | ConvertTo-Json -Depth 10) | Set-Content -Path $File -Encoding UTF8
+
+    $arr = @(@($Data) | Where-Object { $_ -ne $null })  # ensure array and drop nulls
+    if ($arr.Count -eq 0) {
+        "[]" | Set-Content -Path $File -Encoding UTF8
+    } else {
+        (ConvertTo-Json -InputObject $arr -Depth 10) | Set-Content -Path $File -Encoding UTF8
+    }
 }
 
 function Get-UUID {
