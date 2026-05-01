@@ -25,7 +25,7 @@ sudo apt install jq curl
 ## 🔧 実行権限の付与
 
 ``` bash
-chmod +x ./bin/op.sh whitelist.sh
+chmod +x ./bin/op.sh ./bin/whitelist.sh ./bin/whitelist-from-list.sh
 ```
 
 ------------------------------------------------------------------------
@@ -98,6 +98,26 @@ chmod +x ./bin/op.sh whitelist.sh
 
 ``` bash
 ./bin/whitelist.sh add nickname
+```
+
+## 📥 list.txt から一括追加
+
+`list.txt` に1行1プレイヤー名で書いてから実行します。先頭の `@` と前後の空白は自動で除去します。
+
+``` bash
+./bin/whitelist-from-list.sh
+```
+
+UUID 取得に失敗した名前は自動で3回まで再試行します。回数や待ち時間を変える場合:
+
+``` bash
+MAX_RETRIES=5 RETRY_DELAY=3 ./bin/whitelist-from-list.sh
+```
+
+別ファイルを使う場合:
+
+``` bash
+./bin/whitelist-from-list.sh path/to/list.txt
 ```
 
 ## 🗑 削除（rm）

@@ -24,7 +24,7 @@ case "$CMD" in
     fi
 
     echo "Mojang から UUID を取得中: $NAME ..."
-    UUID_RAW=$(curl -s "https://api.mojang.com/users/profiles/minecraft/$NAME" | jq -r '.id')
+    UUID_RAW=$(curl -sS --compressed --retry 5 --retry-delay 1 --retry-all-errors "https://api.mojang.com/users/profiles/minecraft/$NAME" | jq -r '.id')
 
     if [ "$UUID_RAW" = "null" ] || [ -z "$UUID_RAW" ]; then
       echo "Error: UUID が取得できませんでした（名前が間違っているかも？）"
